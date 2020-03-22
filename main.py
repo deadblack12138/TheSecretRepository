@@ -21,7 +21,7 @@ def user_login():
     """
     user_name = var_user_name.get()
     user_pwd = var_user_pwd.get()
-    login_text.place(x=120, y=140)
+    login_text.place(x=55, y=140)
     window.update_idletasks()
 
     # if user_name == '2018002009':
@@ -35,14 +35,13 @@ def user_login():
         else:
             getKccj()
             getTjfx()
+            login_text.place_forget()
             tkinter.messagebox.showinfo(title='Clear', message='登录成功')
             remember_me()
     except requests.Timeout:
         tkinter.messagebox.showerror(title='Error', message='登录超时！')
-    finally:
-        login_text.place_forget()
-    # except:
-    #     tkinter.messagebox.showerror(title='Error', message='程序出错！')
+    except:
+        tkinter.messagebox.showerror(title='Error', message='程序出错！')
 
 
 def user_search():
