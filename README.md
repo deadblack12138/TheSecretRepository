@@ -24,4 +24,4 @@ pyinstaller main.py
 
 可选参数：-i piction.ico（可执行文件图标，需保存在代码所在文件夹下）
 
-如果出现找不到模块的报错可以加上参数说明python包所在位置： -p C:\Users\90446\AppData\Local\Programs\Python\Python38-32\Lib\site-packages
+如果出现找不到模块的报错可以通过参数-p说明python包所在位置：如：-p C:\Users\90446\AppData\Local\Programs\Python\Python38-32\Lib\site-packages
