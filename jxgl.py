@@ -3,6 +3,7 @@ import re
 import requests
 import json
 from bs4 import BeautifulSoup
+import prettytable as pt
 
 login_url = "http://114.55.35.72/Login/CheckLogin"
 kkcj_url = 'http://114.55.35.72/Tschedule/C6Cjgl/GetKccjResult'
@@ -87,14 +88,14 @@ def getKccj():
     # kc_name_list: 课程名字列表
     # kc_info_list: 课程信息列表
     with open('user/all_result.txt', 'w') as f:
-        tplt = "{0:{4}<13}\t{1:{4}<10}\t{2:{4}<10}\t{3:{4}<10}\t\n"
         for i in range(len(xq_list)):
-            # 打印学期
-            f.write('\t\t\t\t' + xq_list[i][0].center(20).strip() + '\n\n')
-            f.write(tplt.format("课程名", "学分", "课程属性", "成绩", chr(12288)))
+            tb=pt.PrettyTable()
+            tb.padding_width=3
+            tb.field_names=["课程名", "学分", "课程属性", "成绩"]
             for j in range(len(kc_name_list[i])):
-                f.write(tplt.format(str(kc_name_list[i][j]), kc_info_list[i][j][0], kc_info_list[i][j][1], kc_info_list[i][j][3], chr(12288)))
-            f.write('\n' + '——'*60 + '\n')
+                tb.add_row([kc_name_list[i][j], kc_info_list[i][j][0], kc_info_list[i][j][1], kc_info_list[i][j][3]])
+            f.write('\n\t\t\t' + xq_list[i][0].center(20).strip() + '\n')
+            f.write(str(tb))
         f.write('\n')
 
 

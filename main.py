@@ -6,6 +6,14 @@ from jxgl import login, getKccj, getTjfx
 import os
 
 
+def login_with_enter(self):
+    """
+    只是用来配合enter事件监听罢了
+    :return: None
+    """
+    user_login()
+
+
 def user_login():
     """
     登录command for 登录按钮，调用login()返回状态信息并作出反应，调用getKccj(), getTjfx()使得在当前目录生成 'all-result.txt'
@@ -13,6 +21,8 @@ def user_login():
     """
     user_name = var_user_name.get()
     user_pwd = var_user_pwd.get()
+    login_text.place(x=55, y=140)
+    window.update_idletasks()
 
     # if user_name == '2018002009':
     #     tkinter.messagebox.showwarning(title='Warning', message='怎么回事？小老弟~')
@@ -25,12 +35,13 @@ def user_login():
         else:
             getKccj()
             getTjfx()
+            login_text.place_forget()
             tkinter.messagebox.showinfo(title='Clear', message='登录成功')
             remember_me()
     except requests.Timeout:
         tkinter.messagebox.showerror(title='Error', message='登录超时！')
-    # except:
-    #     tkinter.messagebox.showerror(title='Error', message='程序出错！')
+    except:
+        tkinter.messagebox.showerror(title='Error', message='程序出错！')
 
 
 def user_search():
@@ -75,6 +86,8 @@ if __name__ == '__main__':
     # 用户信息输入提示
     tk.Label(window, text='学号:', font=('Arial', 14)).place(x=10, y=10)
     tk.Label(window, text='密码:', font=('Arial', 14)).place(x=10, y=50)
+    login_text = tk.Label(window, text='正在登录...', font=('宋体', 10))
+    login_text.place_forget()
 
     # 用户输入框
     # 学号
@@ -111,6 +124,9 @@ if __name__ == '__main__':
     var_ck_remember.set(1)
     ck_remember = tk.Checkbutton(window, text='记住我', variable=var_ck_remember, onvalue=1, offvalue=0)
     ck_remember.place(x=100, y=110)
+
+    # 事件监听，用enter键登录
+    window.bind("<Return>", login_with_enter)
 
     # 读取记忆中的user_info
     try:
